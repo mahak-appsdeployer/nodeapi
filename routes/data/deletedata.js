@@ -5,19 +5,14 @@ const DataSchema = require('../../models/DataSchema')
 
 
 
-router.put('/updatedata/:id', fetchUser, async (req, res) => {
+router.delete('/deletedata/:id', fetchUser, async (req, res) => {
     try {
 
         //getting data by destructuring 
         const { title, description, tag } = req.body
         console.log("body msg" + req.body)
 
-        //new data object
-        const newdata = {}
-        if (title) { newdata.title = title }
-        if (description) { newdata.description = description }
-        if (tag) { newdata.tag = tag }
-        console.log("new data" + newdata.title)
+       
 
         //find the paticular data by it's id
         const data = await DataSchema.findById({ _id: req.params.id })
@@ -26,23 +21,17 @@ router.put('/updatedata/:id', fetchUser, async (req, res) => {
         if (!data) {
             res.status(404).json({ error: "Not Found" })
         }
-console.log("data userid  " + data.userid  )
 
         //check if data belongs to that user or not 
         if (data.userid.toString() !== req.user.id) {
             res.status(401).json({ error: "Not Allowed to update" })
         }
-        console.log("data matched" + newdata.title)
-     await DataSchema.findByIdAndUpdate({ _id: req.params.id }, 
-            { $set: { title: newdata.title, description: newdata.description, tag: newdata.tag } },{new: true}
-        ).then(result => {console.log("result" + result), res.json(result)}).catch(err => console.log("error" + err))  //new:true will return update value if not used first by default findandupdate will not return update value
-        
-        
+        console.log("data matched")
+    const datadelete =   await DataSchema.findByIdAndDelete({ _id: req.params.id })
+    res.json({success : "Successfully deleted the data", data: datadelete })
 
-        
+                  
 
-
-        
     } catch (error) {
         console.log("error" + error)
         res.status(500).json({ error: error })
@@ -53,4 +42,10 @@ console.log("data userid  " + data.userid  )
 
 
 
+
+
 module.exports = router
+
+
+
+

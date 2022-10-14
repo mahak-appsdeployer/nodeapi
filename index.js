@@ -14,9 +14,11 @@ app.use(express.json())
 app.use('/api/user/auth', require('./routes/authenticateUser/register'))
 app.use('/api/user', require('./routes/authenticateUser/login'))
 app.use('/api/user' ,require('./routes/authenticateUser/getUser'))
+app.use('/api/user' ,require('./routes/authenticateUser/getallUser'))
 app.use('/api/data', require('./routes/data/fetchalldata'))
 app.use('/api/data', require('./routes/data/adddata'))
 app.use('/api/data', require('./routes/data/updatedata'))
+app.use('/api/data', require('./routes/data/deletedata'))
 
 
 
