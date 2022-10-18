@@ -23,7 +23,7 @@ try{
     let user = await  User.findOne({email: req.body.email})
     console.log("create email" + user)
     if(user){
-       return  res.status(400).json({errormessage: "User already exist"})
+       return  res.status(400).json({succcess: 'false',errormessage: "User already exist"})
     }
     const salt = await bcryptjs.genSaltSync(10)     
     const password = await bcryptjs.hash(req.body.password, salt)  //salt and hash return promise hence need to await
@@ -33,10 +33,10 @@ try{
             password: password,
           })
 
-res.json({...user.toJSON()})
+res.json({success: 'true',...user.toJSON()})
           //.then(user => res.json(user)).catch(err => res.json({error: "Please enter valid values"}));
         }catch(err){
-            res.status(500).json({error:"Internal server error occured"})
+            res.status(500).json({succcess: 'false',error:"Internal server error occured"})
         }
           // can also use this method instead of user.create
     // const user = User(req.body)

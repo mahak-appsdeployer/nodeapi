@@ -9,6 +9,7 @@ router.post('/adddata', fetchUser, [
     body('title', 'must provide title to your data').exists(),
     body('description', 'Description must be 5 characters long').isLength({ min: 5 }),
 ], async (req, res) => {
+
     try {
         const { title, description, tag } = req.body
         console.log(req.body)
@@ -25,9 +26,10 @@ router.post('/adddata', fetchUser, [
         const saveddata = data.save()
         console.log("saved data" + saveddata)
 
-        res.send(data)
+        res.status(200).json({ resultdata : data })
     } catch (error) {
         res.status(500).json({ error: "Internal server error occured" })
+        
     }
 })
 

@@ -4,8 +4,10 @@ const fetchUser = require('../../middlewares/fetchuser')
 const DataSchema = require('../../models/DataSchema')
 
 router.get('/fetchalldata', fetchUser, async (req,res) => {
-  const data = await DataSchema.find({user: req.user.id})
-  res.send(data)
+  console.log("id" + req)
+  const data = await DataSchema.find({userid: req.user.id})
+  console.log("user id" + data.userid)
+  res.status(200).json({ success: "true", data: data })
 })
 
 

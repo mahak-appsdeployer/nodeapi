@@ -24,7 +24,7 @@ body('password', 'Password can not be blank').exists(),
         let user = await User.findOne({ email: email })
         console.log("user email" + user)
         if (!user) {
-            return res.status(400).json({ errormessage: "Login with correctt credentials" })
+            return res.status(400).json({ errormessage: "Login with correct credentials" })
         }
         console.log("passwrd")
         const paswdcompare = await bcryptjs.compare(password, user.password)
